@@ -121,20 +121,9 @@
                 }
                
             }
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.InitialDirectory = @"C:\\";  
-            saveFileDialog1.Title = "Save text Files";
-            saveFileDialog1.CheckFileExists = true;
-            saveFileDialog1.CheckPathExists = true;
-            saveFileDialog1.DefaultExt = "txt";
-            saveFileDialog1.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-            saveFileDialog1.FilterIndex = 2;
-            saveFileDialog1.RestoreDirectory = true;
-         
-            string filename = "CompareDocument1.pdf";
-            saveFileDialog1.ShowDialog();
+            
 
-            CombinedPDf.Save(filename);
+            CombinedPDf.Save("CombinedPDF.pdf");
         }
 
         private void RemovePdf(PdfDocument pdfDocument)
