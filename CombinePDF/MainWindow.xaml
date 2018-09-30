@@ -11,7 +11,7 @@
         mc:Ignorable="d ignore"
         Height="505.655"
         Width="509.724"
-        Title="Kombiner PDF"
+        Title="Combine PDFs"
         TitleAlignment="Center"
         >
 
@@ -34,8 +34,8 @@
             <RowDefinition Height="17*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="175*"/>
-            <ColumnDefinition Width="342*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <ListView x:Name="listView" HorizontalContentAlignment="Stretch" SelectedValue="{Binding SelectedPDF}" BorderThickness="0"  ItemsSource="{Binding PDFs, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Margin="10" Grid.ColumnSpan="2">
 
@@ -105,23 +105,29 @@
 
 
 
-                            <Label x:Name="Title" Content="asfaogj" MaxWidth="350" FontSize="17" HorizontalAlignment="Left"  Grid.Column="0" Margin="0"/>
+                            <Label x:Name="Title" Content="{Binding FullPath}" MaxWidth="350" FontSize="17" HorizontalAlignment="Left"  Grid.Column="0" Margin="0"/>
                             <Label x:Name="PagesLable" Content="Pages" HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Column="1"  />
                             <Label x:Name="PagesCount" Content="{Binding PageCount}"  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" />
-                            <Label x:Name="Path" Content="{Binding FullPath}" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="1"  Margin="0"  />
+                            <!--<Label x:Name="Path" Content="{Binding FullPath}" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="1"  Margin="0"  />-->
                         </Grid>
                         <Image x:Name="Logo" Stretch="Uniform" Source="Resource/pdflogo.png" HorizontalAlignment="Left" VerticalAlignment="Top" Height="62" Width="62" />
-
-
-
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="button" FontSize="15" Content="Kombiner" Command="{Binding CombinePdfCommand}" Grid.Column="1" HorizontalAlignment="Right"  Margin="0,9,10,28" Grid.Row="1" VerticalAlignment="Center" Width="120" Height="48" RenderTransformOrigin="0.508,-0.167" />
-        <Label x:Name="label1"  Content="Dra og slipp de filene du vil kombinere.&#xA;Juster rekkefølgen og klikk KOMBINER." HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.ColumnSpan="2" Width="222" Margin="10,9,0,0" Height="48"/>
-        <Label x:Name="pageCount" Content="{Binding TotalPageCount, StringFormat='Antall sider: \{0\}'}" Grid.Column="1" HorizontalAlignment="Left" Margin="202,57,0,0" Grid.Row="1" VerticalAlignment="Top" Width="44"/>
+        <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" Margin="10">
+            <Button x:Name="combineBtn" FontSize="15" Content="Combine" Command="{Binding CombinePdfCommand}" Grid.Column="1" HorizontalAlignment="Right" Width="120" Height="48" />
+            <TextBlock HorizontalAlignment="Right">
+                <Run Text="Total Pages: "/>
+                <Run Text="{Binding TotalPageCount, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+            </TextBlock>
+        </StackPanel>
+        <StackPanel Margin="10" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1">
+            <TextBlock FontWeight="DemiBold" FontSize="16" Text="How to: "></TextBlock>
+            <Label x:Name="info" Content="Drag and Drop -> Order -> Combine" />
 
+        </StackPanel>
+        
     </Grid>
 </controls:MetroWindow>
 

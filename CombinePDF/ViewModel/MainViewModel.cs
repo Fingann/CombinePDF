@@ -11,7 +11,7 @@
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.CommandWpf;
     using GalaSoft.MvvmLight.Messaging;
-
+    using Microsoft.Win32;
     using PdfSharp.Pdf;
     using PdfSharp.Pdf.IO;
 
@@ -42,7 +42,17 @@
         }
         private int totalPageCount;
 
-        public string TotalPageCount => string.Format("Antall Sider: {0}",PDFs.Select(x => x.PageCount).Aggregate((a, b) => a + b));
+        public string TotalPageCount {
+        get
+            {
+                if(PDFs.Any()) {
+                    return PDFs?.Select(x => x.PageCount)?.Aggregate((a, b) => a + b).ToString();
+          
+                }
+                return "0";
+            }
+            
+        }
         //{
         //    get
         //    {
@@ -56,12 +66,13 @@
 
         private ObservableCollection<PdfDocument> pdfs = new ObservableCollection<PdfDocument>
                                                              {
-                                                                 PdfReader.Open(
+                                                                 /*PdfReader.Open(
                                                                      "C:\\Users\\sf9398\\Desktop\\PDFCombineTest\\2.pdf",
                                                                      PdfDocumentOpenMode.Import),
                                                                  PdfReader.Open(
                                                                      "C:\\Users\\sf9398\\Desktop\\PDFCombineTest\\3.pdf",
                                                                      PdfDocumentOpenMode.Import)
+                                                                     */
                                                              };
 
        
@@ -110,8 +121,19 @@
                 }
                
             }
-
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.InitialDirectory = @"C:\\";  
+            saveFileDialog1.Title = "Save text Files";
+            saveFileDialog1.CheckFileExists = true;
+            saveFileDialog1.CheckPathExists = true;
+            saveFileDialog1.DefaultExt = "txt";
+            saveFileDialog1.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+         
             string filename = "CompareDocument1.pdf";
+            saveFileDialog1.ShowDialog();
+
             CombinedPDf.Save(filename);
         }
 
@@ -133,6 +155,7 @@
 
         private void MovePdfdown(PdfDocument pdfDocument)
         {
+            
             var index = PDFs.IndexOf(pdfDocument);
             if (index != PDFs.Count -1)
             {
